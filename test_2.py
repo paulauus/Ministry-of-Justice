@@ -1,7 +1,8 @@
 """
 Test 2:
 
-
+This file includes three functions used to find the closest court
+of the correct type for each person in the people.csv file.
 """
 
 import requests
@@ -78,17 +79,18 @@ import pandas as pd
 def get_nearest_courts(postcode) -> list[dict]:
     """Gets the nearest courts to a postcode."""
     url = f"https://www.find-court-tribunal.service.gov.uk/search/results.json?postcode={postcode}"
-    response = requests.get(url)
+    response = requests.get(url, timeout=10)
 
     return response.json()
 
-def find_nearest_court(courts, type) -> dict:
+
+def find_nearest_court(courts, court_type) -> dict:
     """Finds the closest court of the required type to a given postcode."""
     nearest_court = None
     min_distance = float("inf")
 
     for court in courts:
-        if type in court["types"]:
+        if court_type in court["types"]:
             if court["distance"] < min_distance:  # If the court is closer
                 nearest_court = {
                     "name": court['name'],
@@ -99,11 +101,12 @@ def find_nearest_court(courts, type) -> dict:
 
     return nearest_court
 
-def find_court_for_each_person(people_df) -> list[dict]:
+
+def find_court_for_each_person(people) -> list[dict]:
     """Finds the closes required court for each person in the data."""
     results = []
     
-    for _, row in people_df.iterrows():
+    for _, row in people.iterrows():
         name = row['person_name']
         home_postcode = row['home_postcode']
         desired_court_type = row['looking_for_court_type']
@@ -140,10 +143,10 @@ if __name__ == "__main__":
     people_df = pd.read_csv("people.csv")
 
     # Find the nearest court to each person and extract the data
-    results = find_court_for_each_person(people_df)
+    courts_results = find_court_for_each_person(people_df)
 
     # Convert the results to a DataFrame
-    results_df = pd.DataFrame(results)
+    results_df = pd.DataFrame(courts_results)
     print(results_df)
     
 
