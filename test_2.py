@@ -1,3 +1,11 @@
+"""
+Test 2:
+
+
+"""
+
+import requests
+
 # A team of analysts wish to discover how far people are travelling to their nearest
 # desired court. We have provided you with a small test dataset so you can find out if
 # it is possible to give the analysts the data they need to do this. The data is in
@@ -65,6 +73,15 @@
 # - the dx_number (if available) of the nearest court of the right type
 # - the distance to the nearest court of the right type
 
+
+def get_nearest_courts(postcode) -> list[dict]:
+    """Gets the nearest courts to a postcode."""
+    url = f"https://www.find-court-tribunal.service.gov.uk/search/results.json?postcode={postcode}"
+    response = requests.get(url)
+
+    return response.json()
+
 if __name__ == "__main__":
     # [TODO]: write your answer here
-    pass
+    ...
+

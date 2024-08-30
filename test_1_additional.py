@@ -1,3 +1,7 @@
+"""
+This file includes additional tests for test_1.py.
+"""
+
 from test_1 import is_log_line, get_dict
 
 
