@@ -1,3 +1,9 @@
+"""
+Task 3:
+
+A function that adds all the individual numbers at the current time.
+"""
+
 # The below function doesn't work correctly. It should sum all the numbers at the
 # current time. For example, 01:02:03 should return 6. Improve and fix the function,
 # and write unit test(s) for it. Use any testing framework you're familiar with.
