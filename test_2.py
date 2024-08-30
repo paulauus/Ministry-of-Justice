@@ -5,6 +5,7 @@ Test 2:
 """
 
 import requests
+import pandas as pd
 
 # A team of analysts wish to discover how far people are travelling to their nearest
 # desired court. We have provided you with a small test dataset so you can find out if
@@ -81,7 +82,26 @@ def get_nearest_courts(postcode) -> list[dict]:
 
     return response.json()
 
+def find_nearest_court(courts, type) -> dict:
+    """Finds the closest court of the required type to a given postcode."""
+    nearest_court = None
+    min_distance = float("inf")
+
+    for court in courts:
+        if type in court["types"]:
+            if court["distance"] < min_distance:  # If the court is closer
+                nearest_court = {
+                    "name": court['name'],
+                    "dx_number": court.get('dx_number', None),
+                    "distance": court['distance']
+                }
+                min_distance = court["distance"]  # Update min distance
+
+    return nearest_court
+
 if __name__ == "__main__":
     # [TODO]: write your answer here
-    ...
+    people_df = pd.read_csv("people.csv")  # Load the csv data
+
+
 
