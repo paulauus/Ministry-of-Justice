@@ -10,3 +10,13 @@ def test_valid_log_line():
 
     # Assert that the result is True
     assert result is True
+
+
+def test_invalid_log_line():
+    line = "INFO    :.main: Missing timestamp in this log line"
+
+    # Call the function with the invalid log line
+    result = is_log_line(line)
+
+    # Assert that the result is False
+    assert result == False
