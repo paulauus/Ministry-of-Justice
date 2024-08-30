@@ -18,11 +18,12 @@ def sum_current_time(time_str: str) -> int:
         return "Error: Expects data in the format HH:MM:SS"
 
     parts = time_str.split(":")
-    # Check that the legth of each part is 2
+    # Check that the length of each part is 2
     if any(len(part) != 2 for part in parts):
         return "Error: Each part of the time string must be exactly 2 digits long"
 
     try:
+        # Check time given is valid
         if not (0 <= int(parts[0]) <= 23) or not (0 <= int(parts[1]) <= 59) or not (0 <= int(parts[2]) <= 59):
             return "Error: Not a valid time."
         sum_of_digits = sum(int(digit) for part in parts for digit in part)

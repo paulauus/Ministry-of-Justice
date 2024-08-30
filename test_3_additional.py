@@ -29,3 +29,4 @@ def test_sum_current_time_letters():
 def test_sum_current_time_bad_time():
     """Tests the time given is valid."""
     assert sum_current_time("24:99:80") == "Error: Not a valid time."
+    assert sum_current_time("00:00:60") == "Error: Not a valid time."
