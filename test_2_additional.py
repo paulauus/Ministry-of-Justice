@@ -2,16 +2,17 @@
 This file includes additional tests for test_2.py.
 """
 
-import pandas as pd
 from unittest.mock import patch
+import pandas as pd
 from test_2 import get_nearest_courts, find_nearest_court, find_court_for_each_person
 
 
 def test_fetch_nearest_courts(mock_requests_get):
-    # Define a sample JSON response that the API might return
+    """Test the nearest airports are returned in the correct dict format."""
+    # Define a sample JSON response
     response = {}
 
-    # Set up the mock to return a response with our sample JSON data
+    # Set up the mock to return a response with the sample JSON data
     mock_requests_get.return_value.json.return_value = response
 
     postcode = 'SW1A 1AA'
@@ -78,7 +79,7 @@ mock_nearest_court_family = {
 @patch('test_2.get_nearest_courts')
 @patch('test_2.find_nearest_court')
 def test_find_court_for_each_person(mock_find_nearest_desired_court, mock_fetch_nearest_courts):
-
+    """Test test correct courts are found for the people on the list."""
     mock_fetch_nearest_courts.side_effect = [
         mock_courts_data, mock_courts_data]
     mock_find_nearest_desired_court.side_effect = [

@@ -139,6 +139,12 @@ if __name__ == "__main__":
     # Load the csv data
     people_df = pd.read_csv("people.csv")
 
+    # Find the nearest court to each person and extract the data
+    results = find_court_for_each_person(people_df)
+
+    # Convert the results to a DataFrame
+    results_df = pd.DataFrame(results)
+    print(results_df)
     
 
 
