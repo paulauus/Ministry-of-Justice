@@ -2,7 +2,9 @@
 This file includes additional tests for test_2.py.
 """
 
-from test_2 import get_nearest_courts, find_nearest_court
+import pandas as pd
+from unittest.mock import patch
+from test_2 import get_nearest_courts, find_nearest_court, find_court_for_each_person
 
 
 def test_fetch_nearest_courts(mock_requests_get):
@@ -39,3 +41,67 @@ def test_closest_court_found():
     result = find_nearest_court(courts_data, "Criminal")
     assert result == expected_result
 
+
+mock_people_df = pd.DataFrame([
+    {
+        "person_name": "John Doe",
+        "home_postcode": "SW1A 1AA",
+        "looking_for_court_type": "Criminal"
+    },
+    {
+        "person_name": "Jane Smith",
+        "home_postcode": "E1 6AN",
+        "looking_for_court_type": "Family"
+    }
+])
+
+mock_courts_data = [
+    {"name": "Court A", "types": ["Criminal", "Civil"],
+        "dx_number": "DX 12345", "distance": 2.5},
+    {"name": "Court B", "types": ["Family"],
+        "dx_number": "DX 67890", "distance": 1.0}
+]
+
+mock_nearest_court_criminal = {
+    "name": "Court A",
+    "dx_number": "DX 12345",
+    "distance": 2.5
+}
+
+mock_nearest_court_family = {
+    "name": "Court B",
+    "dx_number": "DX 67890",
+    "distance": 1.0
+}
+
+
+@patch('test_2.get_nearest_courts')
+@patch('test_2.find_nearest_court')
+def test_find_court_for_each_person(mock_find_nearest_desired_court, mock_fetch_nearest_courts):
+
+    mock_fetch_nearest_courts.side_effect = [
+        mock_courts_data, mock_courts_data]
+    mock_find_nearest_desired_court.side_effect = [
+        mock_nearest_court_criminal, mock_nearest_court_family]
+
+    expected_result = [
+        {
+            "name": "John Doe",
+            "home_postcode": "SW1A 1AA",
+            "desired_court_type": "Criminal",
+            "nearest_court": "Court A",
+            "dx_number": "DX 12345",
+            "distance": 2.5
+        },
+        {
+            "name": "Jane Smith",
+            "home_postcode": "E1 6AN",
+            "desired_court_type": "Family",
+            "nearest_court": "Court B",
+            "dx_number": "DX 67890",
+            "distance": 1.0
+        }
+    ]
+
+    result = find_court_for_each_person(mock_people_df)
+    assert result == expected_result

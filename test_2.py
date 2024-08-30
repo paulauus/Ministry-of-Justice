@@ -99,6 +99,10 @@ def find_nearest_court(courts, type) -> dict:
 
     return nearest_court
 
+def find_court_for_each_person(people) -> list[dict]:
+    """Finds the closes required court for each person in the data."""
+    ...
+
 if __name__ == "__main__":
     # [TODO]: write your answer here
     people_df = pd.read_csv("people.csv")  # Load the csv data
