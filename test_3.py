@@ -23,6 +23,8 @@ def sum_current_time(time_str: str) -> int:
         return "Error: Each part of the time string must be exactly 2 digits long"
 
     try:
+        if not (0 <= int(parts[0]) <= 23) or not (0 <= int(parts[1]) <= 59) or not (0 <= int(parts[2]) <= 59):
+            return "Error: Not a valid time."
         sum_of_digits = sum(int(digit) for part in parts for digit in part)
     except ValueError:
         return "Error: Expects data in the format HH:MM:SS"
@@ -35,4 +37,4 @@ if __name__ == "__main__":
     print(sum_current_time("01:ab:45"))
     print(sum_current_time("aa:bb:cc"))
     print(sum_current_time("1:24:234"))
-    
+    print(sum_current_time("24:99:80"))
