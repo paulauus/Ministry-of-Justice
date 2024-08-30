@@ -20,7 +20,7 @@ def sum_current_time(time_str: str) -> int:
     parts = time_str.split(":")
     try:
         # Check time given is valid
-        if not (0 <= int(parts[0]) <= 23) or not (0 <= int(parts[1]) <= 59) or not (0 <= int(parts[2]) <= 59):
+        if not 0 <= int(parts[0]) <= 23 or not 0 <= int(parts[1]) <= 59 or not 0 <= int(parts[2]) <= 59:
             return "Error: Not a valid time."
         sum_of_digits = sum(int(digit) for part in parts for digit in part)
     except ValueError:
