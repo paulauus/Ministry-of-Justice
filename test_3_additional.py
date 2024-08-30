@@ -23,3 +23,5 @@ def test_sum_current_time_letters():
     """Tests letters return error message."""
     assert sum_current_time(
         "aa:bb:cc") == "Error: Expects data in the format HH:MM:SS"
+    assert sum_current_time(
+        "12:34:ab") == "Error: Expects data in the format HH:MM:SS"
