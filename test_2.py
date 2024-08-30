@@ -5,6 +5,8 @@ This file includes three functions used to find the closest court
 of the correct type for each person in the people.csv file.
 """
 
+from rich.console import Console
+from rich.table import Table
 import requests
 import pandas as pd
 
@@ -137,6 +139,33 @@ def find_court_for_each_person(people) -> list[dict]:
     return results
 
 
+def print_results(results):
+    """Prints results in a rich table format."""
+    console = Console()
+    table = Table(title="Closest Court for Each Person")
+
+    # Columns
+    table.add_column("Name", justify="left")
+    table.add_column("Home Postcode", justify="left", style="blue")
+    table.add_column("Desired Court Type", justify="center")
+    table.add_column("Nearest Court", justify="left")
+    table.add_column("DX Number", justify="left")
+    table.add_column("Distance", justify="right")
+
+    # Rows
+    for result in results:
+        table.add_row(
+            result["name"],
+            result["home_postcode"],
+            result["desired_court_type"],
+            result["nearest_court"],
+            str(result["dx_number"]) if result["dx_number"] else "N/A",
+            str(result["distance"])
+        )
+        
+    console.print(table)
+
+
 if __name__ == "__main__":
     # [TODO]: write your answer here
 
@@ -146,6 +175,4 @@ if __name__ == "__main__":
     # Find the nearest court to each person and extract the data
     courts_results = find_court_for_each_person(people_df)
 
-    # Convert the results to a DataFrame
-    results_df = pd.DataFrame(courts_results)
-    print(results_df)
+    print_results(courts_results)
