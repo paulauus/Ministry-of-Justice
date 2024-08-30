@@ -1,4 +1,11 @@
-"""Test 1."""
+"""
+Test 1:
+
+This file includes two functions (is_log_line and get_dict) and tests
+for these functions in the main method execution.
+
+Additional tests are in the file test_1_additional.py.
+"""
 
 # [TODO]: step 1
 # Update the is_log_line function below to skip lines that are not valid log lines.
@@ -12,8 +19,8 @@
 import re
 
 def is_log_line(line):
-    """Takes a log line and returns True if it is a valid log line and returns nothing
-    if it is not.
+    """Takes a log line and returns True if it is a valid
+    log line and returns nothing if it is not.
     """
     # Create the regex pattern
     pattern = r"^\d{2}/\d{2}/\d{2} \d{2}:\d{2}:\d{2} (INFO|WARNING|TRACE) +:.+"
@@ -29,11 +36,27 @@ def is_log_line(line):
 # dictionary with keys for "timestamp", "log_level", and "message". The valid log
 # levels are `INFO`, `TRACE`, and `WARNING`. See lines 67 to 71 for how we expect the
 # results to look.
+
+
 def get_dict(line):
     """Takes a log line and returns a dict with
-    `timestamp`, `log_level`, `message` keys
+    `timestamp`, `log_level`, `message` keys.
     """
-    pass
+
+    # Split the line to separate parts into three
+    parts = line.strip().split(maxsplit=3)
+
+    # Match the parts to their key names
+    timestamp = f"{parts[0]} {parts[1]}"
+    log_level  = parts[2]
+    message = parts[3] if len(parts) > 3 else ""
+
+    log_dictionary = {
+        "timestamp": timestamp,
+        "log_level": log_level,
+        "message": message,
+    }
+    return log_dictionary
 
 
 # YOU DON'T NEED TO CHANGE ANYTHING BELOW THIS LINE
