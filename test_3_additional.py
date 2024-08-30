@@ -11,4 +11,4 @@ def test_sum_current_time():
 
 def test_sum_current_time_bad_input():
     """Tests bad input returns error message."""
-    assert sum_current_time("1:2:3") == "Expects data in the format HH:MM:SS"
+    assert sum_current_time("1:2:3") == "Error: Expects data in the format HH:MM:SS"

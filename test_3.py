@@ -12,5 +12,21 @@ A function that adds all the individual numbers at the current time.
 # [TODO]: fix the function
 def sum_current_time(time_str: str) -> int:
     """Expects data in the format HH:MM:SS"""
-    list_of_nums = time_str.split(":")
-    return sum(list_of_nums)
+    if len(time_str) != 8:
+        return "Error: Expects data in the format HH:MM:SS"
+    parts = time_str.split(":")
+    if len(parts) != 3:
+        return "Error: Expects data in the format HH:MM:SS"
+    hours = parts[0]
+    minutes = parts[1]
+    seconds = parts[2]
+    digits = [int(digit) for digit in hours] + [int(digit) for digit in minutes] + [int(digit) for digit in seconds]
+    sum_of_digits = 0
+    for num in digits:
+        sum_of_digits += num
+    return sum_of_digits
+# ValueError
+
+if __name__ == "__main__":
+
+    print(sum_current_time("01:23:45"))
