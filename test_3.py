@@ -20,7 +20,12 @@ def sum_current_time(time_str: str) -> int:
     hours = parts[0]
     minutes = parts[1]
     seconds = parts[2]
-    digits = [int(digit) for digit in hours] + [int(digit) for digit in minutes] + [int(digit) for digit in seconds]
+    if len(hours) != 2 or len(minutes) != 2 or len(seconds) != 2:
+        return "Error: Expects data in the format HH:MM:SS"
+    try:
+        digits = [int(digit) for digit in hours] + [int(digit) for digit in minutes] + [int(digit) for digit in seconds]
+    except ValueError:
+        return "Error: Expects data in the format HH:MM:SS"
     sum_of_digits = 0
     for num in digits:
         sum_of_digits += num
@@ -30,3 +35,5 @@ def sum_current_time(time_str: str) -> int:
 if __name__ == "__main__":
 
     print(sum_current_time("01:23:45"))
+    print(sum_current_time("01:ab:45"))
+    print(sum_current_time("aa:bb:cc"))
