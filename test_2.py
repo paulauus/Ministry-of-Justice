@@ -99,13 +99,47 @@ def find_nearest_court(courts, type) -> dict:
 
     return nearest_court
 
-def find_court_for_each_person(people) -> list[dict]:
+def find_court_for_each_person(people_df) -> list[dict]:
     """Finds the closes required court for each person in the data."""
-    ...
+    results = []
+    
+    for _, row in people_df.iterrows():
+        name = row['person_name']
+        home_postcode = row['home_postcode']
+        desired_court_type = row['looking_for_court_type']
+
+        courts_data = get_nearest_courts(home_postcode)
+        nearest_court = find_nearest_court(
+            courts_data, desired_court_type)
+
+        if nearest_court:
+            results.append({
+                "name": name,
+                "home_postcode": home_postcode,
+                "desired_court_type": desired_court_type,
+                "nearest_court": nearest_court['name'],
+                "dx_number": nearest_court['dx_number'],
+                "distance": nearest_court['distance']
+            })
+        else:
+            results.append({
+                "name": name,
+                "home_postcode": home_postcode,
+                "desired_court_type": desired_court_type,
+                "nearest_court": "No court found",
+                "dx_number": None,
+                "distance": None
+            })
+
+    return results
 
 if __name__ == "__main__":
     # [TODO]: write your answer here
-    people_df = pd.read_csv("people.csv")  # Load the csv data
+    
+    # Load the csv data
+    people_df = pd.read_csv("people.csv")
+
+    
 
 
 
