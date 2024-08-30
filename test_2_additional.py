@@ -4,10 +4,10 @@ This file includes additional tests for test_2.py.
 
 from unittest.mock import patch
 import pandas as pd
-from test_2 import get_nearest_courts, find_nearest_court, find_court_for_each_person
+from test_2 import get_courts_at_postcode, find_nearest_court, find_court_for_each_person
 
 
-def test_fetch_nearest_courts(mock_requests_get):
+def test_get_courts_at_postcode(mock_requests_get):
     """Test the nearest airports are returned in the correct dict format."""
     # Define a sample JSON response
     response = {}
@@ -16,15 +16,15 @@ def test_fetch_nearest_courts(mock_requests_get):
     mock_requests_get.return_value.json.return_value = response
 
     postcode = 'SW1A 1AA'
-    result = get_nearest_courts(postcode)
+    result = get_courts_at_postcode(postcode)
 
     # Check that requests.get was called with the correct URL
     expected_url = f"https://www.find-court-tribunal.service.gov.uk/search/results.json?postcode={postcode}"
-    mock_requests_get.assert_called_once_with(expected_url)
+    mock_requests_get.assert_called_once_with(expected_url, timeout=10)
     assert result == response
 
 
-def test_closest_court_found():
+def test_find_nearest_court():
     """Tests that the nearest court of correct type is output."""
     courts_data = [
         {"name": "Court A", "types": [
@@ -76,7 +76,7 @@ mock_nearest_court_family = {
 }
 
 
-@patch('test_2.get_nearest_courts')
+@patch('test_2.get_courts_at_postcode')
 @patch('test_2.find_nearest_court')
 def test_find_court_for_each_person(mock_find_nearest_desired_court, mock_fetch_nearest_courts):
     """Test test correct courts are found for the people on the list."""
