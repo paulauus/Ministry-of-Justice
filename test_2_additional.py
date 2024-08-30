@@ -15,7 +15,7 @@ def test_get_courts_at_postcode(mock_requests_get):
     # Set up the mock to return a response with the sample JSON data
     mock_requests_get.return_value.json.return_value = response
 
-    postcode = 'SW1A 1AA'
+    postcode = 'DA9 9PN'
     result = get_courts_at_postcode(postcode)
 
     # Check that requests.get was called with the correct URL

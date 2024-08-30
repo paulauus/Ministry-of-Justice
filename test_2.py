@@ -162,7 +162,7 @@ def print_results(results):
             str(result["dx_number"]) if result["dx_number"] else "N/A",
             str(result["distance"])
         )
-        
+
     console.print(table)
 
 
@@ -175,4 +175,5 @@ if __name__ == "__main__":
     # Find the nearest court to each person and extract the data
     courts_results = find_court_for_each_person(people_df)
 
+    # Display the results in a console table
     print_results(courts_results)
